@@ -86,9 +86,9 @@ class MBA_UNet(nn.Module):
         x2 = self.assp1_d2(x)
         x3 = self.assp1_d3(x)
         x4 = self.assp1_d4(x)
+        x = torch.cat([x1, x2, x3, x4], dim=1)
 
         # Decoder
-        x = torch.cat([x1, x2, x3, x4], dim=1)
         x = self.up3d_1(x)
         x = torch.cat([x, skip4], dim=1)
         x = self.conv3d_6(x)
