@@ -1,3 +1,6 @@
+"""
+    Implementation of MBA-UNet
+"""
 import torch.nn as nn
 import torch
 
@@ -71,6 +74,18 @@ class MBA_UNet(nn.Module):
         self.conv_seg = nn.Conv3d(in_channels=16, out_channels=out_channels, kernel_size=1, stride=1, padding=0)
 
     def forward(self, x):
+        """
+        :param x: input( BxCxDxHxW )
+            B: batch size
+            C: channel
+            D: slice number (depth)
+            H: height
+            W: weight
+        :return x: output( Bx3CxDxHxW )
+            1st C: IPH
+            2nd C: IVH
+            3rd C: ICH
+        """
         # Encoder
         skip1 = self.conv3d_1(x)
         x = self.down3d_1(skip1)
